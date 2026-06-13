@@ -1,0 +1,152 @@
+name: Feathery Vocabulary
+description: Domain vocabulary for the Feathery enterprise form SDK and AI-driven data intake platform.
+url: https://www.feathery.io
+version: 1.0.0
+terms:
+  - term: Form
+    definition: >
+      A multi-step digital form built on the Feathery platform. Forms contain
+      steps, fields, logic rules, and integrations. Forms can be active or
+      inactive and are identified by a unique string ID.
+    type: entity
+    related: [FormStep, Field, Submission, LogicRule]
+
+  - term: FormStep
+    definition: >
+      A single page or screen within a multi-step form. Each step contains
+      UI elements such as fields, images, videos, texts, and buttons. One
+      step is designated the origin (entry) step.
+    type: entity
+    related: [Form, Field]
+
+  - term: Field
+    definition: >
+      An input element within a form step. Supports types including text_field,
+      integer_field, decimal_field, date_field, checkbox, dropdown,
+      radio_button, file_upload, signature, matrix, phone_number, and email.
+      Fields can be marked required and may be repeatable.
+    type: entity
+    related: [FormStep, HiddenField, SubmissionValue]
+
+  - term: HiddenField
+    definition: >
+      A non-visible field used to store metadata or computed values. Types
+      include json_value, number_value, and text_value. Server-side hidden
+      fields are only accessible server-to-server.
+    type: entity
+    related: [Field]
+
+  - term: Submission
+    definition: >
+      A collected set of field values from a user completing a form. Submissions
+      have a user_id, timestamps for start and last activity, and a completed
+      flag. Each field value records its type and creation/update times.
+    type: entity
+    related: [Form, User, SubmissionValue]
+
+  - term: SubmissionValue
+    definition: >
+      A single field value entry within a submission. Contains the field ID,
+      field type, the submitted value, and creation/update timestamps.
+    type: entity
+    related: [Submission, Field]
+
+  - term: User
+    definition: >
+      An end user interacting with one or more forms. Identified by a user_id
+      string. Users store field values and have sessions per form.
+    type: entity
+    related: [Submission, UserFormSession]
+
+  - term: UserFormSession
+    definition: >
+      The state of a specific user's progress through a specific form, including
+      current step, current field values, and completion status.
+    type: entity
+    related: [User, Form]
+
+  - term: DocumentTemplate
+    definition: >
+      A reusable document file (pdf, docx, xlsx, pptx, idml) that can be filled
+      with data from form submissions. Templates are identified by a string ID
+      and stored with a URL to their file content.
+    type: entity
+    related: [DocumentEnvelope]
+
+  - term: DocumentEnvelope
+    definition: >
+      An instance of a DocumentTemplate that has been filled and optionally
+      sent for e-signature. Tracks viewed and signed status, signer and sender
+      emails, and links to the generated file.
+    type: entity
+    related: [DocumentTemplate]
+
+  - term: ExtractionConfig
+    definition: >
+      An AI extraction configuration specifying how to extract structured data
+      from documents (images, CSVs, meeting transcripts, or via AI queries).
+      Contains extraction queries, confidence settings, and integration hooks.
+    type: entity
+    related: [ExtractionQuery, ExtractionRun]
+
+  - term: ExtractionQuery
+    definition: >
+      A single data extraction instruction within an ExtractionConfig. Specifies
+      the question_type (one_value, multiple_value, yes_no, page_number),
+      entities to look for, natural-language criteria, and where to save results.
+    type: entity
+    related: [ExtractionConfig]
+
+  - term: ExtractionRun
+    definition: >
+      A single execution of an ExtractionConfig against a document. Records the
+      file processed, success status, extracted data, approval state, and
+      timestamps for email and document extraction.
+    type: entity
+    related: [ExtractionConfig]
+
+  - term: LogicRule
+    definition: >
+      A conditional rule that executes automatically based on form events
+      (change, load, form_complete, submit, error, view, action). Rules can be
+      authored in a no-code editor or code editor and are ordered by index.
+    type: entity
+    related: [Form, FormStep, Field]
+
+  - term: Workspace
+    definition: >
+      An isolated tenant environment within a Feathery account. Workspaces
+      contain their own forms and can generate login tokens for user access.
+      Useful for multi-tenant financial services deployments.
+    type: entity
+    related: [Form, User]
+
+  - term: DataHub
+    definition: >
+      A structured data store within Feathery that supports entry-level
+      actions. Used to perform operations on data hub entries via the API.
+    type: entity
+    related: []
+
+  - term: token-based authentication
+    definition: >
+      Feathery uses API key tokens passed as the Authorization header value
+      in the format "Token <API KEY>". Keys can be rotated via the API.
+    type: concept
+    related: []
+
+  - term: multi-region deployment
+    definition: >
+      Feathery operates regional API endpoints to support data residency
+      requirements: US (api.feathery.io), Canada (api-ca.feathery.io),
+      Europe (api-eu.feathery.io), and Australia (api-au.feathery.io).
+    type: concept
+    related: []
+
+  - term: pagination
+    definition: >
+      List endpoints return paginated responses with count, next, previous,
+      total_pages, current_page, and a results array. The page_size parameter
+      controls results per page (maximum 1000).
+    type: concept
+    related: []

@@ -1,0 +1,76 @@
+{
+  "id": "contact-us-form",
+  "name": "Contact Us",
+  "active": true,
+  "internal_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "tags": ["contact", "inquiry"],
+  "created_at": "2026-01-10T09:00:00Z",
+  "updated_at": "2026-06-01T14:30:00Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "internal_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+      "origin": true,
+      "images": [],
+      "videos": [],
+      "texts": [
+        { "value": "Please fill in your contact details below." }
+      ],
+      "buttons": [
+        { "id": "next-btn", "label": "Next" }
+      ],
+      "fields": [
+        {
+          "id": "first_name",
+          "internal_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+          "type": "text_field",
+          "required": true,
+          "placeholder": "Jane",
+          "display_text": "First Name",
+          "max_length": 100,
+          "min_length": 1,
+          "metadata": {},
+          "repeated": false,
+          "repeat_trigger": null
+        },
+        {
+          "id": "last_name",
+          "internal_id": "b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a22",
+          "type": "text_field",
+          "required": true,
+          "placeholder": "Doe",
+          "display_text": "Last Name",
+          "max_length": 100,
+          "min_length": 1,
+          "metadata": {},
+          "repeated": false,
+          "repeat_trigger": null
+        },
+        {
+          "id": "email_address",
+          "internal_id": "c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33",
+          "type": "email",
+          "required": true,
+          "placeholder": "jane.doe@example.com",
+          "display_text": "Email Address",
+          "metadata": {},
+          "repeated": false,
+          "repeat_trigger": null
+        },
+        {
+          "id": "inquiry_type",
+          "internal_id": "d3eebc99-9c0b-4ef8-bb6d-6bb9bd380a44",
+          "type": "dropdown",
+          "required": true,
+          "placeholder": "Select inquiry type",
+          "display_text": "Inquiry Type",
+          "metadata": {
+            "options": ["General", "Sales", "Support", "Billing"]
+          },
+          "repeated": false,
+          "repeat_trigger": null
+        }
+      ]
+    }
+  ]
+}

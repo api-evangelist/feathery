@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.feathery.io/schema/form",
+  "title": "Feathery Form",
+  "description": "Schema for a Feathery form object",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Form identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable form name"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the form is currently active and accepting submissions"
+    },
+    "internal_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Workspace-specific internal UUID"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Organizational tags"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FormStep"
+      },
+      "description": "Ordered list of form steps"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 last-updated timestamp"
+    }
+  },
+  "required": ["id", "name"],
+  "$defs": {
+    "FormStep": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "internal_id": { "type": "string", "format": "uuid" },
+        "origin": {
+          "type": "boolean",
+          "description": "True if this is the entry step"
+        },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Field" }
+        }
+      },
+      "required": ["id"]
+    },
+    "Field": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "internal_id": { "type": "string", "format": "uuid" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text_field",
+            "integer_field",
+            "decimal_field",
+            "date_field",
+            "checkbox",
+            "dropdown",
+            "radio_button",
+            "file_upload",
+            "signature",
+            "matrix",
+            "phone_number",
+            "email"
+          ]
+        },
+        "required": { "type": "boolean" },
+        "placeholder": { "type": "string" },
+        "display_text": { "type": "string" },
+        "max_length": { "type": "integer", "nullable": true },
+        "min_length": { "type": "integer", "nullable": true },
+        "metadata": { "type": "object" },
+        "repeated": { "type": "boolean" },
+        "repeat_trigger": { "type": "string", "nullable": true }
+      },
+      "required": ["id", "type"]
+    }
+  }
+}

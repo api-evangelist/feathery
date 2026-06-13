@@ -1,0 +1,243 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "feathery": "https://api.feathery.io/vocab/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Form": "feathery:Form",
+    "FormStep": "feathery:FormStep",
+    "Field": "feathery:Field",
+    "HiddenField": "feathery:HiddenField",
+    "Submission": "feathery:Submission",
+    "SubmissionValue": "feathery:SubmissionValue",
+    "User": "feathery:User",
+    "UserFormSession": "feathery:UserFormSession",
+    "DocumentTemplate": "feathery:DocumentTemplate",
+    "DocumentEnvelope": "feathery:DocumentEnvelope",
+    "ExtractionConfig": "feathery:ExtractionConfig",
+    "ExtractionQuery": "feathery:ExtractionQuery",
+    "ExtractionRun": "feathery:ExtractionRun",
+    "LogicRule": "feathery:LogicRule",
+    "Workspace": "feathery:Workspace",
+    "DataHub": "feathery:DataHub",
+
+    "id": "@id",
+    "type": "@type",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "active": {
+      "@id": "feathery:active",
+      "@type": "xsd:boolean"
+    },
+    "internal_id": "feathery:internalId",
+    "tags": {
+      "@id": "schema:keywords",
+      "@container": "@set"
+    },
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "steps": {
+      "@id": "feathery:hasStep",
+      "@container": "@list",
+      "@type": "@id"
+    },
+    "fields": {
+      "@id": "feathery:hasField",
+      "@container": "@list",
+      "@type": "@id"
+    },
+    "origin": {
+      "@id": "feathery:isOriginStep",
+      "@type": "xsd:boolean"
+    },
+
+    "field_type": "feathery:fieldType",
+    "required": {
+      "@id": "feathery:required",
+      "@type": "xsd:boolean"
+    },
+    "placeholder": "feathery:placeholder",
+    "display_text": "feathery:displayText",
+    "max_length": {
+      "@id": "feathery:maxLength",
+      "@type": "xsd:integer"
+    },
+    "min_length": {
+      "@id": "feathery:minLength",
+      "@type": "xsd:integer"
+    },
+    "metadata": "feathery:metadata",
+    "repeated": {
+      "@id": "feathery:repeated",
+      "@type": "xsd:boolean"
+    },
+    "repeat_trigger": "feathery:repeatTrigger",
+    "server_side": {
+      "@id": "feathery:serverSide",
+      "@type": "xsd:boolean"
+    },
+
+    "user_id": "feathery:userId",
+    "form_id": "feathery:formId",
+    "values": {
+      "@id": "feathery:hasValue",
+      "@container": "@set"
+    },
+    "value": "feathery:value",
+    "submission_start": {
+      "@id": "feathery:submissionStart",
+      "@type": "xsd:dateTime"
+    },
+    "last_submitted": {
+      "@id": "feathery:lastSubmitted",
+      "@type": "xsd:dateTime"
+    },
+    "completed": {
+      "@id": "feathery:completed",
+      "@type": "xsd:boolean"
+    },
+    "field_values": "feathery:fieldValues",
+    "current_step": "feathery:currentStep",
+
+    "file": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "signer": {
+      "@id": "feathery:signer",
+      "@type": "schema:email"
+    },
+    "sender": {
+      "@id": "feathery:sender",
+      "@type": "schema:email"
+    },
+    "viewed": {
+      "@id": "feathery:viewed",
+      "@type": "xsd:boolean"
+    },
+    "signed": {
+      "@id": "feathery:signed",
+      "@type": "xsd:boolean"
+    },
+    "document": {
+      "@id": "feathery:document",
+      "@type": "@id"
+    },
+    "user": {
+      "@id": "feathery:user",
+      "@type": "@id"
+    },
+
+    "file_type": "feathery:fileType",
+    "extraction_type": "feathery:extractionType",
+    "merge_files": {
+      "@id": "feathery:mergeFiles",
+      "@type": "xsd:boolean"
+    },
+    "confidence_scores_enabled": {
+      "@id": "feathery:confidenceScoresEnabled",
+      "@type": "xsd:boolean"
+    },
+    "context_rules": {
+      "@id": "feathery:contextRules",
+      "@container": "@set"
+    },
+    "queries": {
+      "@id": "feathery:hasQuery",
+      "@container": "@set",
+      "@type": "@id"
+    },
+    "question_type": "feathery:questionType",
+    "entities": {
+      "@id": "feathery:entities",
+      "@container": "@set"
+    },
+    "criteria": "feathery:criteria",
+    "data_validation_rules": {
+      "@id": "feathery:dataValidationRules",
+      "@container": "@set"
+    },
+    "save_to_fields": {
+      "@id": "feathery:saveToFields",
+      "@container": "@set"
+    },
+    "run_email_mode": "feathery:runEmailMode",
+
+    "trigger_event": "feathery:triggerEvent",
+    "index": "feathery:ruleIndex",
+    "code": "feathery:code",
+    "enabled": {
+      "@id": "feathery:enabled",
+      "@type": "xsd:boolean"
+    },
+    "valid": {
+      "@id": "feathery:valid",
+      "@type": "xsd:boolean"
+    },
+    "mode": "feathery:mode",
+
+    "success": {
+      "@id": "feathery:success",
+      "@type": "xsd:boolean"
+    },
+    "approved": {
+      "@id": "feathery:approved",
+      "@type": "xsd:boolean"
+    },
+    "approver": "feathery:approver",
+    "identity": "feathery:identity",
+    "data": {
+      "@id": "feathery:extractedData",
+      "@container": "@set"
+    },
+    "field_internal_id": "feathery:fieldInternalId",
+    "file_name": "feathery:fileName",
+    "email_extracted_at": {
+      "@id": "feathery:emailExtractedAt",
+      "@type": "xsd:dateTime"
+    },
+    "document_extracted_at": {
+      "@id": "feathery:documentExtractedAt",
+      "@type": "xsd:dateTime"
+    },
+
+    "members": {
+      "@id": "feathery:hasMembers",
+      "@container": "@set"
+    },
+    "api_key": "feathery:apiKey",
+    "email": "schema:email",
+    "role": "feathery:role",
+    "token": "feathery:loginToken",
+    "expires_at": {
+      "@id": "feathery:tokenExpiresAt",
+      "@type": "xsd:dateTime"
+    },
+
+    "action": "feathery:action",
+    "count": "feathery:totalCount",
+    "next": {
+      "@id": "feathery:nextPage",
+      "@type": "@id"
+    },
+    "previous": {
+      "@id": "feathery:previousPage",
+      "@type": "@id"
+    },
+    "total_pages": "feathery:totalPages",
+    "current_page": "feathery:currentPage",
+    "results": {
+      "@id": "feathery:results",
+      "@container": "@set"
+    }
+  }
+}

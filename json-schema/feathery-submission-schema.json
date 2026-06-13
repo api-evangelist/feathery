@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.feathery.io/schema/submission",
+  "title": "Feathery Form Submission",
+  "description": "Schema for a Feathery form submission",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "User or submission identifier"
+    },
+    "form_id": {
+      "type": "string",
+      "description": "Form identifier this submission belongs to"
+    },
+    "submission_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the user started the submission"
+    },
+    "last_submitted": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Most recent submission activity timestamp"
+    },
+    "completed": {
+      "type": "boolean",
+      "description": "Whether the submission is marked complete"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SubmissionValue"
+      },
+      "description": "Array of field value entries"
+    }
+  },
+  "required": ["user_id"],
+  "$defs": {
+    "SubmissionValue": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Field identifier"
+        },
+        "type": {
+          "type": "string",
+          "description": "Field type"
+        },
+        "value": {
+          "description": "Submitted value (type varies by field type)"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "type"]
+    }
+  }
+}

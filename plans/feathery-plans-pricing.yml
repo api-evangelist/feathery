@@ -1,0 +1,145 @@
+name: Feathery Plans and Pricing
+description: Pricing tiers for Feathery's enterprise form SDK and AI data intake platform. Plans scale from a free tier for individuals to custom growth and business plans for enterprises in financial services.
+specificationVersion: '0.1'
+url: https://www.feathery.io/pricing
+plans:
+  - name: Free
+    description: Entry-level plan for developers and small teams building forms with basic submission tracking.
+    url: https://www.feathery.io/pricing
+    price: 0.00
+    currency: USD
+    billingCycle: monthly
+    features:
+      - name: Monthly Submissions
+        description: Up to 500 form submissions per month
+        quota: 500
+        unit: submissions/month
+      - name: Live Forms
+        description: Up to 5 live forms at any time
+        quota: 5
+        unit: forms
+      - name: Questions
+        description: Unlimited questions per form
+        quota: unlimited
+      - name: Seats
+        description: Unlimited team seats
+        quota: unlimited
+      - name: Pages and Conditions
+        description: Unlimited pages and conditional logic
+        quota: unlimited
+      - name: File Upload Size
+        description: Maximum file upload size per submission
+        quota: 10
+        unit: MB
+      - name: Developer Library
+        description: Access to developer library and SDK
+        quota: unlimited
+      - name: SOC 2 Compliance
+        description: SOC 2 Type 2 certification included
+        quota: included
+    limitations:
+      - name: No Partial Submissions
+        description: Partial submission capture not available on free plan
+      - name: Feathery Branding
+        description: Feathery branding displayed on forms
+      - name: No Custom Domain
+        description: Custom DNS domain not available
+      - name: No SSO
+        description: Single sign-on not available
+      - name: No HIPAA/GDPR
+        description: HIPAA and GDPR data sovereignty not available
+  - name: Growth
+    description: Custom-priced plan for growing teams requiring unlimited submissions, advanced logic, integrations, and compliance features.
+    url: https://www.feathery.io/pricing
+    price: custom
+    currency: USD
+    billingCycle: annual
+    features:
+      - name: Monthly Submissions
+        description: Unlimited form submissions
+        quota: unlimited
+      - name: Live Forms
+        description: Custom number of live forms
+        quota: custom
+      - name: Partial Submissions
+        description: Capture incomplete form submissions
+        quota: included
+      - name: Remember User Progress
+        description: Save and restore user progress across sessions
+        quota: included
+      - name: Remove Feathery Branding
+        description: White-label forms without Feathery branding
+        quota: included
+      - name: Custom SEO Metadata
+        description: Customize SEO title, description, and metadata
+        quota: included
+      - name: Custom HTML and CSS
+        description: Full control over form styling with custom code
+        quota: included
+      - name: Custom Subdomain
+        description: Host forms on a custom subdomain
+        quota: included
+      - name: CAPTCHA Verification
+        description: Bot protection via CAPTCHA
+        quota: included
+      - name: A/B Testing and Analytics
+        description: Form variant testing and conversion analytics
+        quota: included
+      - name: Logic and API Connectors
+        description: Advanced conditional logic and external API integrations
+        quota: included
+      - name: Custom DNS Domain
+        description: Host forms on your own domain
+        quota: included
+      - name: Role-Based Access Controls
+        description: Fine-grained permissions per team member
+        quota: included
+      - name: Single Sign-On
+        description: SSO via SAML or OAuth providers
+        quota: included
+      - name: Audit Logs
+        description: Full audit trail of all actions
+        quota: included
+      - name: HIPAA Compliance
+        description: HIPAA-compliant data handling
+        quota: included
+      - name: GDPR Compliance
+        description: GDPR and data sovereignty controls
+        quota: included
+      - name: Priority Support
+        description: Priority customer support
+        quota: included
+      - name: Premium Integrations
+        description: Stripe, Salesforce, SMS passcodes, and KYC/compliance tools
+        quota: included
+  - name: Business
+    description: Enterprise-grade plan for large organizations requiring white-label editor, workspaces, and advanced compliance.
+    url: https://www.feathery.io/pricing
+    price: custom
+    currency: USD
+    billingCycle: annual
+    features:
+      - name: Monthly Submissions
+        description: Unlimited form submissions
+        quota: unlimited
+      - name: Live Forms
+        description: Custom number of live forms
+        quota: custom
+      - name: White Label Editor
+        description: Embed the form builder into your own product
+        quota: included
+      - name: Workspaces
+        description: Multi-workspace management for enterprise teams
+        quota: included
+      - name: All Growth Features
+        description: Includes all features from the Growth plan
+        quota: included
+      - name: Data Hubs
+        description: Centralized enterprise data management with bulk syncing
+        quota: included
+      - name: Data Warehouse Export
+        description: Export data to Snowflake and Databricks
+        quota: included
+      - name: Dedicated Support
+        description: Dedicated customer success manager
+        quota: included

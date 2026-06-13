@@ -1,0 +1,55 @@
+name: Feathery Rate Limits
+description: Rate limiting policies for the Feathery REST API. Feathery uses token-based authentication with environment-specific API keys. Specific rate limit thresholds are not publicly documented and are applied per account tier; contact Feathery support for enterprise rate limit configurations.
+specificationVersion: '0.1'
+url: https://api-docs.feathery.io/
+rateLimits:
+  - name: API Authentication
+    description: All API requests must include a valid API key in the Authorization header using the Token scheme. API keys are environment-specific (production, development) allowing separation of real and test data.
+    type: authentication
+    header: Authorization
+    scheme: Token
+    notes: Rotate API keys via the account management endpoint. Each environment has its own key.
+  - name: General API Requests
+    description: Rate limits apply to all REST API endpoints. Specific thresholds depend on the account subscription tier and are enforced server-side. Enterprise customers can negotiate higher limits.
+    type: requests
+    window: minute
+    quota: contact-sales
+    unit: requests/minute
+    scope: per-api-key
+    notes: Feathery does not publicly document specific rate limit values. Limits scale with Growth and Business plan tiers. Contact support at docs.feathery.io for current limits.
+  - name: Form Submissions
+    description: Monthly submission quotas are enforced per plan tier. Free plan is capped at 500 submissions per month; Growth and Business plans have custom or unlimited submissions.
+    type: quota
+    window: month
+    tiers:
+      - plan: Free
+        quota: 500
+        unit: submissions/month
+      - plan: Growth
+        quota: unlimited
+        unit: submissions/month
+      - plan: Business
+        quota: unlimited
+        unit: submissions/month
+  - name: Multi-Region API
+    description: API requests can be routed to region-specific base URLs to comply with data residency requirements. Each region operates independently.
+    type: regional
+    regions:
+      - name: United States
+        baseURL: https://api.feathery.io
+        default: true
+      - name: Canada
+        baseURL: https://api-ca.feathery.io
+      - name: Europe
+        baseURL: https://api-eu.feathery.io
+      - name: Australia
+        baseURL: https://api-au.feathery.io
+  - name: Document Intelligence Processing
+    description: AI document extraction runs are subject to processing capacity limits based on subscription tier. Large document batches may experience queuing during high-demand periods.
+    type: processing
+    scope: per-account
+    notes: Document extraction throughput scales with enterprise plan tier. Contact Feathery for high-volume document processing SLAs.
+  - name: Bulk Hidden Field Operations
+    description: Bulk creation and editing of hidden fields is supported via the API. Batch sizes should be kept reasonable to avoid timeout errors.
+    type: batch
+    notes: Batch operations introduced May 2026. Recommended batch size and limits are available in the API reference at api-docs.feathery.io.

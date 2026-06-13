@@ -1,0 +1,121 @@
+name: Feathery FinOps Framework
+description: FinOps cost management and optimization guidance for Feathery API consumption. Covers cost allocation, usage optimization, and financial governance for teams using Feathery's form SDK and data intake platform.
+specificationVersion: '1.0'
+url: https://www.feathery.io/pricing
+framework: FinOps Foundation FOCUS 1.0
+currency: USD
+
+costAllocation:
+  - dimension: Plan Tier
+    description: Primary cost driver is subscription plan tier (Free, Growth, Business). Growth and Business plans use custom pricing negotiated with Feathery sales.
+    values:
+      - Free
+      - Growth
+      - Business
+  - dimension: Workspace
+    description: Business plan users can segment costs by workspace for multi-team or multi-product chargeback.
+    values:
+      - Per Workspace
+  - dimension: Environment
+    description: API keys are environment-specific. Track API usage separately by production vs development environments to avoid counting test traffic against quotas.
+    values:
+      - Production
+      - Development
+  - dimension: Region
+    description: Multi-region deployments (US, Canada, EU, Australia) may carry different pricing for data residency compliance. Negotiate per-region costs with Feathery for GDPR/sovereignty requirements.
+    values:
+      - US
+      - Canada
+      - Europe
+      - Australia
+
+usageMetrics:
+  - metric: Monthly Submissions
+    description: Core consumption unit. Free plan capped at 500/month. Growth and Business plans offer custom or unlimited submissions. Monitor monthly submission velocity to forecast plan upgrade timing.
+    unit: submissions
+    billingImpact: high
+    optimizationTip: Audit form abandonment rates and remove redundant forms to reduce unnecessary submission consumption on capped plans.
+  - metric: Live Forms
+    description: Free plan allows 5 live forms. Growth and Business plans allow custom quantities. Deactivate unused or seasonal forms to stay within plan limits.
+    unit: forms
+    billingImpact: medium
+    optimizationTip: Archive forms that are no longer receiving traffic to free up live form slots on lower-tier plans.
+  - metric: Document Intelligence Extractions
+    description: AI document parsing runs consume processing capacity. High-volume extraction workflows may affect plan costs on enterprise tiers.
+    unit: extraction-runs
+    billingImpact: medium
+    optimizationTip: Batch document uploads where possible and schedule high-volume extraction jobs during off-peak hours.
+  - metric: File Upload Storage
+    description: File uploads are limited to 10MB per submission on Free plan; custom limits on paid plans. Large file uploads increase storage and processing costs.
+    unit: MB
+    billingImpact: low
+    optimizationTip: Implement client-side file compression before upload and restrict accepted file types to minimize storage overhead.
+  - metric: API Calls
+    description: REST API calls for form management, user data retrieval, and document operations. Monitor API usage through the API connector error logs to identify inefficient polling patterns.
+    unit: requests
+    billingImpact: low
+    optimizationTip: Use webhooks for event-driven integrations rather than polling API endpoints to reduce unnecessary API call volume.
+
+costOptimization:
+  - strategy: Right-Size Plan Selection
+    description: Evaluate submission volume trends over 90 days before committing to a paid plan. Free plan supports 500 submissions/month; upgrading prematurely adds unnecessary cost.
+    priority: high
+    effort: low
+  - strategy: Annual Billing Commitment
+    description: Growth and Business plans are billed annually, which typically yields discounts versus monthly billing. Commit to annual plans only after validating product-market fit.
+    priority: high
+    effort: low
+  - strategy: Consolidate Workspaces
+    description: Business plan workspaces can centralize forms across products. Avoid maintaining separate Feathery accounts per team; use workspace segmentation within a single Business contract.
+    priority: medium
+    effort: medium
+  - strategy: Webhook-Driven Architecture
+    description: Replace periodic API polling with webhook-driven event processing to reduce API call volume and improve real-time responsiveness without added cost.
+    priority: medium
+    effort: medium
+  - strategy: Form Consolidation
+    description: Audit all live forms quarterly. Consolidate forms serving similar purposes using multi-step form navigation and conditional logic to reduce the count of live forms.
+    priority: medium
+    effort: medium
+  - strategy: Environment Key Hygiene
+    description: Use development API keys for all non-production testing. This separates test submissions from production quotas and ensures accurate billing forecasting.
+    priority: high
+    effort: low
+  - strategy: Data Warehouse Integration Cost
+    description: Snowflake and Databricks export integrations (Business plan) carry their own platform costs. Coordinate with data team to schedule incremental syncs rather than full exports to minimize warehouse compute spend.
+    priority: low
+    effort: high
+
+budgetingGuidance:
+  - guidance: Baseline with Free Plan
+    description: Start on the Free plan to establish actual submission volume and form complexity baselines before committing to paid plans.
+  - guidance: Custom Pricing Negotiation
+    description: Growth and Business plans use custom pricing. Negotiate based on committed annual submission volume, number of workspaces, and compliance requirements (HIPAA, GDPR) to secure volume discounts.
+  - guidance: Compliance Uplift Costs
+    description: HIPAA, GDPR, and data sovereignty features are available only on Growth and Business plans. Budget for compliance-driven plan upgrades when expanding to regulated markets.
+  - guidance: Integration Premium Features
+    description: Premium integrations (Stripe, Salesforce, KYC tools, SMS passcodes) are restricted to paid plans. Factor integration costs into total cost of ownership when evaluating Feathery against alternatives.
+  - guidance: White Label Pricing
+    description: The White Label Editor for embedding the form builder into partner products is a Business plan feature. Treat this as a platform licensing cost and allocate across embedded partner revenue.
+
+tagging:
+  - tag: feathery:plan
+    description: Tag resources with the Feathery plan tier for cost allocation reporting
+    values:
+      - free
+      - growth
+      - business
+  - tag: feathery:environment
+    description: Tag API usage by environment
+    values:
+      - production
+      - development
+  - tag: feathery:workspace
+    description: Tag by Feathery workspace name for internal chargeback
+  - tag: feathery:region
+    description: Tag by deployment region for data residency cost tracking
+    values:
+      - us
+      - ca
+      - eu
+      - au

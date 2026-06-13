@@ -1,0 +1,70 @@
+name: Feathery
+description: Feathery is an enterprise form SDK and AI-driven data intake platform offering a REST API for creating multi-step forms, managing field logic, collecting submissions, and integrating with payment, authentication, and financial services systems. Purpose-built for financial services including insurance and wealth management.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/feathery/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+aid: feathery
+type: Index
+tags:
+  - Forms
+  - Form Builder
+  - Multi-Step Forms
+  - Document Intelligence
+  - AI
+  - Financial Services
+  - Insurance
+  - Wealth Management
+  - eSignature
+  - Workflows
+  - Data Intake
+  - Submissions
+  - Payments
+  - Authentication
+apis:
+  - name: Feathery REST API
+    description: RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://api-docs.feathery.io/
+    baseURL: https://api.feathery.io
+    tags:
+      - Forms
+      - Submissions
+      - Documents
+      - Fields
+      - Users
+      - Workflows
+    properties:
+      - type: Documentation
+        url: https://api-docs.feathery.io/
+      - type: OpenAPI
+        url: https://api-docs.feathery.io/
+common:
+  - type: Website
+    url: https://www.feathery.io
+  - type: Documentation
+    url: https://docs.feathery.io
+  - type: GitHubOrg
+    url: https://github.com/feathery-org
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/feathery-forms
+  - type: Blog
+    url: https://www.feathery.io/blog
+  - type: Pricing
+    url: https://www.feathery.io/pricing
+  - type: StatusPage
+    url: https://status.feathery.io
+  - type: X
+    url: https://x.com/feathery_io
+  - type: Plans
+    url: plans/feathery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/feathery-rate-limits.yml
+  - type: FinOps
+    url: finops/feathery-finops.yml
+  - type: ChangeLog
+    url: https://www.feathery.io/product-updates
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

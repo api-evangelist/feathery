@@ -2,5 +2,14 @@
   "provider": "feathery",
   "blog_url": "https://www.feathery.io/blog",
   "last_fetched": null,
-  "posts": []
+  "posts": [],
+  "repo": "feathery",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/feathery-forms",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }

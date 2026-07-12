@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/feathery-rest-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: TokenAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Token-based authentication. Format: Token <API KEY>'
+  sources:
+  - openapi/feathery-rest-api-openapi.yml

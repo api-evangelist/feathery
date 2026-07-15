@@ -41,6 +41,8 @@ apis:
       - type: OpenAPI
         url: https://api-docs.feathery.io/
 common:
+  - type: AgenticAccess
+    url: agentic-access/feathery-agentic-access.yml
   - type: DomainSecurity
     url: security/feathery-domain-security.yml
   - type: Authentication

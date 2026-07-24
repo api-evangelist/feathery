@@ -1,0 +1,274 @@
+openapi: 3.0.3
+info:
+  title: Feathery REST Account Hidden Fields API
+  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    url: https://www.feathery.io
+  license:
+    name: Proprietary
+servers:
+- url: https://api.feathery.io
+  description: US (default)
+- url: https://api-ca.feathery.io
+  description: Canada
+- url: https://api-eu.feathery.io
+  description: Europe
+- url: https://api-au.feathery.io
+  description: Australia
+security:
+- TokenAuth: []
+tags:
+- name: Hidden Fields
+  description: Hidden field management
+paths:
+  /api/field/hidden/:
+    get:
+      operationId: listHiddenFields
+      summary: List hidden fields
+      description: Retrieve a list of all hidden fields.
+      tags:
+      - Hidden Fields
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: List of hidden fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedHiddenFields'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createHiddenFields
+      summary: Create hidden fields
+      description: Create new hidden fields.
+      tags:
+      - Hidden Fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HiddenFieldInput'
+      responses:
+        '201':
+          description: Hidden fields created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HiddenField'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/field/hidden/detail/:
+    patch:
+      operationId: updateHiddenFields
+      summary: Edit hidden fields
+      description: Edit existing hidden fields.
+      tags:
+      - Hidden Fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HiddenFieldUpdate'
+      responses:
+        '200':
+          description: Hidden fields updated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HiddenField'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/field/hidden/delete/:
+    delete:
+      operationId: deleteHiddenFields
+      summary: Delete hidden fields
+      description: Delete hidden fields.
+      tags:
+      - Hidden Fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                  description: List of hidden field IDs to delete
+      responses:
+        '204':
+          description: Hidden fields deleted successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    HiddenFieldInput:
+      type: object
+      required:
+      - id
+      - type
+      properties:
+        id:
+          type: string
+          description: Identifier for the hidden field
+        type:
+          type: string
+          enum:
+          - json_value
+          - number_value
+          - text_value
+          description: Data type of the hidden field
+        server_side:
+          type: boolean
+          description: Whether the field should be server-side only
+    PaginatedHiddenFields:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/HiddenField'
+    HiddenField:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Hidden field unique identifier
+        internal_id:
+          type: string
+          format: uuid
+          description: Internal identifier
+        type:
+          type: string
+          enum:
+          - json_value
+          - number_value
+          - text_value
+          description: Hidden field data type
+        server_side:
+          type: boolean
+          description: Whether the field is server-side only
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+    HiddenFieldUpdate:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: Identifier of the hidden field to update
+        type:
+          type: string
+          enum:
+          - json_value
+          - number_value
+          - text_value
+          description: New data type
+        server_side:
+          type: boolean
+          description: Whether the field should be server-side only
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the next page
+        previous:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+  parameters:
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <API KEY>'

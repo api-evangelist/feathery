@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Feathery REST Account Data Hubs API
+  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    url: https://www.feathery.io
+  license:
+    name: Proprietary
+servers:
+- url: https://api.feathery.io
+  description: US (default)
+- url: https://api-ca.feathery.io
+  description: Canada
+- url: https://api-eu.feathery.io
+  description: Europe
+- url: https://api-au.feathery.io
+  description: Australia
+security:
+- TokenAuth: []
+tags:
+- name: Data Hubs
+  description: Data hub entry actions
+paths:
+  /api/hub/{hub_id}/entry/{entry_id}/action/:
+    post:
+      operationId: performHubEntryAction
+      summary: Perform hub entry action
+      description: Perform an action on a data hub entry.
+      tags:
+      - Data Hubs
+      parameters:
+      - name: hub_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Data hub identifier
+      - name: entry_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Data hub entry identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - action
+              properties:
+                action:
+                  type: string
+                  description: Action to perform on the entry
+                data:
+                  type: object
+                  additionalProperties: true
+                  description: Additional data for the action
+      responses:
+        '200':
+          description: Action performed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <API KEY>'

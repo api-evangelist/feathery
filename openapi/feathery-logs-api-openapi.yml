@@ -1,0 +1,246 @@
+openapi: 3.0.3
+info:
+  title: Feathery REST Account Logs API
+  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    url: https://www.feathery.io
+  license:
+    name: Proprietary
+servers:
+- url: https://api.feathery.io
+  description: US (default)
+- url: https://api-ca.feathery.io
+  description: Canada
+- url: https://api-eu.feathery.io
+  description: Europe
+- url: https://api-au.feathery.io
+  description: Australia
+security:
+- TokenAuth: []
+tags:
+- name: Logs
+  description: API connector and email logs
+paths:
+  /api/logs/api-connector/{form_id}/:
+    get:
+      operationId: listApiConnectorLogs
+      summary: List API connector errors
+      description: Retrieve API connector errors for a specific form.
+      tags:
+      - Logs
+      parameters:
+      - $ref: '#/components/parameters/FormId'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/StartTime'
+      - $ref: '#/components/parameters/EndTime'
+      responses:
+        '200':
+          description: List of API connector logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLogs'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/logs/email/form/{form_id}/:
+    get:
+      operationId: listFormEmailLogs
+      summary: List emails sent from form
+      description: Retrieve a list of emails sent from a specific form.
+      tags:
+      - Logs
+      parameters:
+      - $ref: '#/components/parameters/FormId'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/StartTime'
+      - $ref: '#/components/parameters/EndTime'
+      responses:
+        '200':
+          description: List of form email logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmailLogs'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/logs/email/extraction/{extraction_id}/:
+    get:
+      operationId: listExtractionEmailLogs
+      summary: List forwarded extraction emails
+      description: Retrieve a list of forwarded emails for a specific extraction.
+      tags:
+      - Logs
+      parameters:
+      - $ref: '#/components/parameters/ExtractionId'
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: List of extraction email logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmailLogs'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/logs/email/issues/:
+    get:
+      operationId: listEmailIssues
+      summary: List email delivery issues
+      description: Retrieve a list of email delivery issues.
+      tags:
+      - Logs
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: List of email delivery issues
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmailIssues'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    PaginatedEmailLogs:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+    PaginatedLogs:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the next page
+        previous:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    PaginatedEmailIssues:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <API KEY>'

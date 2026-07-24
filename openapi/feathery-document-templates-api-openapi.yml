@@ -1,0 +1,353 @@
+openapi: 3.0.3
+info:
+  title: Feathery REST Account Document Templates API
+  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    url: https://www.feathery.io
+  license:
+    name: Proprietary
+servers:
+- url: https://api.feathery.io
+  description: US (default)
+- url: https://api-ca.feathery.io
+  description: Canada
+- url: https://api-eu.feathery.io
+  description: Europe
+- url: https://api-au.feathery.io
+  description: Australia
+security:
+- TokenAuth: []
+tags:
+- name: Document Templates
+  description: PDF and document template management
+paths:
+  /api/document/fill/:
+    post:
+      operationId: fillDocument
+      summary: Fill/sign document template
+      description: Fill or sign a document template.
+      tags:
+      - Document Templates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - document
+              properties:
+                document:
+                  type: string
+                  description: Document template ID
+                user:
+                  type: string
+                  description: User or submission ID
+                signer:
+                  type: string
+                  format: email
+                  description: Email of the signer
+                fields:
+                  type: object
+                  additionalProperties: true
+                  description: Field values to fill in the document
+      responses:
+        '201':
+          description: Document filled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentEnvelope'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/document/template/:
+    get:
+      operationId: listDocumentTemplates
+      summary: List document templates
+      description: Retrieve a list of all document templates.
+      tags:
+      - Document Templates
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      responses:
+        '200':
+          description: List of document templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentTemplates'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: uploadDocumentTemplates
+      summary: Bulk upload document templates
+      description: Bulk upload document templates (multipart/form-data).
+      tags:
+      - Document Templates
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Document template file
+                name:
+                  type: string
+                  description: Name for the template
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Tags for the template
+      responses:
+        '201':
+          description: Template uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/document/envelope/:
+    get:
+      operationId: listDocumentEnvelopes
+      summary: List document envelopes
+      description: Retrieve a list of all document envelopes.
+      tags:
+      - Document Templates
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/CreatedAfter'
+      - $ref: '#/components/parameters/CreatedBefore'
+      responses:
+        '200':
+          description: List of document envelopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentEnvelopes'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/document/envelope/{envelope_id}/:
+    delete:
+      operationId: deleteDocumentEnvelope
+      summary: Delete document envelope
+      description: Delete a specific document envelope.
+      tags:
+      - Document Templates
+      parameters:
+      - name: envelope_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique envelope identifier
+      responses:
+        '204':
+          description: Envelope deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    DocumentEnvelope:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Envelope identifier
+        document:
+          type: string
+          description: Template ID
+        user:
+          type: string
+          description: Submission identifier
+        signer:
+          type: string
+          format: email
+          description: Signer email address
+        sender:
+          type: string
+          format: email
+          description: Sender email address
+        file:
+          type: string
+          format: uri
+          description: URL to the envelope file
+        type:
+          type: string
+          description: Envelope type
+        viewed:
+          type: boolean
+          description: Whether the envelope has been viewed
+        signed:
+          type: boolean
+          description: Whether the envelope has been signed
+        tags:
+          type: array
+          items:
+            type: string
+          description: Envelope tags
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+    DocumentTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Template identifier
+        name:
+          type: string
+          description: Template name
+        type:
+          type: string
+          enum:
+          - pdf
+          - docx
+          - xlsx
+          - pptx
+          - idml
+          description: Document type
+        file:
+          type: string
+          format: uri
+          description: URL to the template file
+        tags:
+          type: array
+          items:
+            type: string
+          description: Template tags
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+    PaginatedDocumentTemplates:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/DocumentTemplate'
+    PaginatedDocumentEnvelopes:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/DocumentEnvelope'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the next page
+        previous:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+  parameters:
+    CreatedBefore:
+      name: created_before
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (before)
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    CreatedAfter:
+      name: created_after
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (after)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <API KEY>'

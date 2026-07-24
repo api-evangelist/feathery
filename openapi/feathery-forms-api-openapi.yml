@@ -1,0 +1,661 @@
+openapi: 3.0.3
+info:
+  title: Feathery REST Account Forms API
+  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
+
+    '
+  version: 1.0.0
+  contact:
+    url: https://www.feathery.io
+  license:
+    name: Proprietary
+servers:
+- url: https://api.feathery.io
+  description: US (default)
+- url: https://api-ca.feathery.io
+  description: Canada
+- url: https://api-eu.feathery.io
+  description: Europe
+- url: https://api-au.feathery.io
+  description: Australia
+security:
+- TokenAuth: []
+tags:
+- name: Forms
+  description: Form creation and management
+paths:
+  /api/form/:
+    get:
+      operationId: listForms
+      summary: List all forms
+      description: Retrieve a list of all forms.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      - name: tags
+        in: query
+        schema:
+          type: string
+        description: Filter by tags (comma-separated)
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedForms'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createForm
+      summary: Create form from template
+      description: Create a new form from a template.
+      tags:
+      - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the new form
+                template_id:
+                  type: string
+                  description: Template ID to create from
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Tags for the form
+      responses:
+        '201':
+          description: Form created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/form/{form_id}/:
+    get:
+      operationId: getForm
+      summary: Retrieve form schema
+      description: Retrieve the full schema for a specific form.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/FormId'
+      responses:
+        '200':
+          description: Form schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateForm
+      summary: Update form properties
+      description: Update properties of a specific form.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/FormId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name for the form
+                active:
+                  type: boolean
+                  description: Whether the form is active
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Updated tags
+      responses:
+        '200':
+          description: Form updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteForm
+      summary: Delete form
+      description: Delete a specific form.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/FormId'
+      responses:
+        '204':
+          description: Form deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/form/copy/:
+    post:
+      operationId: copyForm
+      summary: Duplicate form
+      description: Create a copy of an existing form.
+      tags:
+      - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - form_id
+              properties:
+                form_id:
+                  type: string
+                  description: ID of the form to duplicate
+                name:
+                  type: string
+                  description: Name for the duplicated form
+      responses:
+        '201':
+          description: Form duplicated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/form/submission/:
+    get:
+      operationId: listSubmissions
+      summary: List form submissions
+      description: Retrieve a list of form submissions.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/Page'
+      - name: form_id
+        in: query
+        schema:
+          type: string
+        description: Filter submissions by form ID
+      - name: completed
+        in: query
+        schema:
+          type: boolean
+        description: Filter by completion status
+      - $ref: '#/components/parameters/StartTime'
+      - $ref: '#/components/parameters/EndTime'
+      - name: fields
+        in: query
+        schema:
+          type: string
+        description: Comma-separated list of fields to include
+      - name: sort
+        in: query
+        schema:
+          type: string
+        description: Sort order for results
+      responses:
+        '200':
+          description: List of form submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSubmissions'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSubmission
+      summary: Create/update form submissions
+      description: Create or update form submissions.
+      tags:
+      - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionInput'
+      responses:
+        '200':
+          description: Submission created or updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '201':
+          description: Submission created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/form/submission/pdf/:
+    post:
+      operationId: exportSubmissionPdf
+      summary: Export submission as PDF
+      description: Export a form submission as a PDF document.
+      tags:
+      - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - submission_id
+              properties:
+                submission_id:
+                  type: string
+                  description: Submission ID to export
+      responses:
+        '200':
+          description: PDF generated successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+  schemas:
+    SubmissionValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Field identifier
+        type:
+          type: string
+          description: Field type
+        value:
+          description: Submitted value (type varies by field type)
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    LogicRule:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Logic rule identifier
+        name:
+          type: string
+          description: Rule name
+        description:
+          type: string
+          description: Rule description
+        trigger_event:
+          type: string
+          enum:
+          - change
+          - load
+          - form_complete
+          - submit
+          - error
+          - view
+          - action
+          description: Event that triggers the rule
+        index:
+          type: number
+          description: Execution order index
+        steps:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Step IDs (for submit/load triggers)
+        elements:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Element IDs (for change/error/view/action triggers)
+        code:
+          type: object
+          additionalProperties: true
+          description: Executable rule definition
+        enabled:
+          type: boolean
+          description: Whether the rule is enabled
+        valid:
+          type: boolean
+          description: Whether the rule is valid
+        mode:
+          type: string
+          enum:
+          - code_editor
+          - no-code
+          description: Rule editing mode
+    FormDetail:
+      allOf:
+      - $ref: '#/components/schemas/Form'
+      - type: object
+        properties:
+          steps:
+            type: array
+            items:
+              $ref: '#/components/schemas/FormStep'
+            description: Form steps
+          logic_rules:
+            type: array
+            items:
+              $ref: '#/components/schemas/LogicRule'
+            description: Logic rules
+          integrations:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
+            description: Integrations configured for the form
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    SubmissionInput:
+      type: object
+      properties:
+        form_id:
+          type: string
+          description: Form identifier
+        user_id:
+          type: string
+          description: User identifier
+        field_values:
+          type: object
+          additionalProperties: true
+          description: Field ID to value mapping
+        completed:
+          type: boolean
+          description: Whether to mark the submission as completed
+    PaginatedSubmissions:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Submission'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the next page
+        previous:
+          type: string
+          format: uri
+          nullable: true
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    Field:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Field identifier
+        internal_id:
+          type: string
+          format: uuid
+          description: Internal field identifier
+        type:
+          type: string
+          enum:
+          - text_field
+          - integer_field
+          - decimal_field
+          - date_field
+          - checkbox
+          - dropdown
+          - radio_button
+          - file_upload
+          - signature
+          - matrix
+          - phone_number
+          - email
+          description: Field type
+        required:
+          type: boolean
+          description: Whether the field is required
+        placeholder:
+          type: string
+          description: Field placeholder text
+        display_text:
+          type: string
+          description: Label displayed to the user
+        max_length:
+          type: integer
+          nullable: true
+          description: Maximum input length
+        min_length:
+          type: integer
+          nullable: true
+          description: Minimum input length
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional metadata including options and validation rules
+        repeated:
+          type: boolean
+          description: Whether the field can be repeated
+        repeat_trigger:
+          type: string
+          nullable: true
+          description: Trigger for field repetition
+    FormStep:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Step identifier
+        internal_id:
+          type: string
+          format: uuid
+          description: Internal step identifier
+        origin:
+          type: boolean
+          description: Whether this is the first step
+        images:
+          type: array
+          items:
+            type: object
+          description: Images on the step
+        videos:
+          type: array
+          items:
+            type: object
+          description: Videos on the step
+        texts:
+          type: array
+          items:
+            type: object
+          description: Text elements on the step
+        buttons:
+          type: array
+          items:
+            type: object
+          description: Buttons on the step
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+          description: Fields on the step
+    Submission:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmissionValue'
+          description: Submitted field values
+        user_id:
+          type: string
+          description: User identifier
+        submission_start:
+          type: string
+          format: date-time
+          description: When the submission was started
+        last_submitted:
+          type: string
+          format: date-time
+          description: When the submission was last updated
+    Form:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Form identifier
+        name:
+          type: string
+          description: Form name
+        active:
+          type: boolean
+          description: Whether the form is active
+        internal_id:
+          type: string
+          format: uuid
+          description: Workspace-specific internal identifier
+        tags:
+          type: array
+          items:
+            type: string
+          description: Form tags
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+    PaginatedForms:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Form'
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Format: Token <API KEY>'

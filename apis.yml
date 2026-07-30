@@ -1,6 +1,19 @@
 name: Feathery
 description: Feathery is an enterprise form SDK and AI-driven data intake platform offering a REST API for creating multi-step forms, managing field logic, collecting submissions, and integrating with payment, authentication, and financial services systems. Purpose-built for financial services including insurance and wealth management.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/feathery.png
 url: https://raw.githubusercontent.com/api-evangelist/feathery/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -23,23 +36,114 @@ tags:
   - Payments
   - Authentication
 apis:
-  - name: Feathery REST API
-    description: RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://api-docs.feathery.io/
-    baseURL: https://api.feathery.io
-    tags:
-      - Forms
-      - Submissions
-      - Documents
-      - Fields
-      - Users
-      - Workflows
-    properties:
-      - type: Documentation
-        url: https://api-docs.feathery.io/
-      - type: OpenAPI
-        url: https://api-docs.feathery.io/
+- aid: feathery:feathery-account-api
+  name: Feathery Account API
+  description: Team and account management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-account-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-data-hubs-api
+  name: Feathery Data Hubs API
+  description: Data hub entry actions
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Data Hubs
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-data-hubs-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-document-intelligence-api
+  name: Feathery Document Intelligence API
+  description: AI-driven document extraction
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Document Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-document-intelligence-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-document-templates-api
+  name: Feathery Document Templates API
+  description: PDF and document template management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Document Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-document-templates-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-end-users-api
+  name: Feathery End Users API
+  description: End user management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - End Users
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-end-users-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-forms-api
+  name: Feathery Forms API
+  description: Form creation and management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-forms-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-hidden-fields-api
+  name: Feathery Hidden Fields API
+  description: Hidden field management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Hidden Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-hidden-fields-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-logs-api
+  name: Feathery Logs API
+  description: API connector and email logs
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-logs-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
+- aid: feathery:feathery-workspaces-api
+  name: Feathery Workspaces API
+  description: Workspace management
+  humanURL: https://api-docs.feathery.io/
+  baseURL: https://api.feathery.io
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/feathery-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.feathery.io/
 common:
   - type: AgenticAccess
     url: agentic-access/feathery-agentic-access.yml

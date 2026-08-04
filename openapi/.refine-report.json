@@ -1,0 +1,30 @@
+{
+  "provider": "feathery",
+  "sources": [
+    "feathery-account-api-openapi.yml",
+    "feathery-data-hubs-api-openapi.yml",
+    "feathery-document-intelligence-api-openapi.yml",
+    "feathery-document-templates-api-openapi.yml",
+    "feathery-end-users-api-openapi.yml",
+    "feathery-forms-api-openapi.yml",
+    "feathery-hidden-fields-api-openapi.yml",
+    "feathery-logs-api-openapi.yml",
+    "feathery-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "feathery-account-api-openapi.yml",
+    "feathery-data-hubs-api-openapi.yml",
+    "feathery-document-intelligence-api-openapi.yml",
+    "feathery-document-templates-api-openapi.yml",
+    "feathery-end-users-api-openapi.yml",
+    "feathery-forms-api-openapi.yml",
+    "feathery-hidden-fields-api-openapi.yml",
+    "feathery-logs-api-openapi.yml",
+    "feathery-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

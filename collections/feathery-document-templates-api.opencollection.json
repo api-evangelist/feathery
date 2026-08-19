@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Document Templates API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Document Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fill/sign document template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/document/fill/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fill or sign a document template."
+        },
+        {
+          "info": {
+            "name": "List document templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/document/template/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all document templates."
+        },
+        {
+          "info": {
+            "name": "Bulk upload document templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/document/template/",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "name",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "tags",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Bulk upload document templates (multipart/form-data)."
+        },
+        {
+          "info": {
+            "name": "List document envelopes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/document/envelope/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creation date (after)"
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter by creation date (before)"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all document envelopes."
+        },
+        {
+          "info": {
+            "name": "Delete document envelope",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.feathery.io/api/document/envelope/:envelope_id/",
+            "params": [
+              {
+                "name": "envelope_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique envelope identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific document envelope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Logs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List API connector errors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/logs/api-connector/:form_id/",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique form identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              }
+            ]
+          },
+          "docs": "Retrieve API connector errors for a specific form."
+        },
+        {
+          "info": {
+            "name": "List emails sent from form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/logs/email/form/:form_id/",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique form identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of emails sent from a specific form."
+        },
+        {
+          "info": {
+            "name": "List forwarded extraction emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/logs/email/extraction/:extraction_id/",
+            "params": [
+              {
+                "name": "extraction_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique extraction identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of forwarded emails for a specific extraction."
+        },
+        {
+          "info": {
+            "name": "List email delivery issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/logs/email/issues/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of email delivery issues."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

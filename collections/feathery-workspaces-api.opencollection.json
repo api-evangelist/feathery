@@ -1,0 +1,235 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Workspaces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/workspace/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all workspaces."
+        },
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/workspace/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new workspace."
+        },
+        {
+          "info": {
+            "name": "Retrieve workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Update workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Delete workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Generate login token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/login-token/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a login token for a workspace."
+        },
+        {
+          "info": {
+            "name": "Populate workspace from template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/populate-form/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Populate a workspace from a form template."
+        },
+        {
+          "info": {
+            "name": "Get form report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/form-report/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              }
+            ]
+          },
+          "docs": "Retrieve a form report for a workspace."
+        },
+        {
+          "info": {
+            "name": "Get submission report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/workspace/:workspace_id/submission-report/",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique workspace identifier"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              }
+            ]
+          },
+          "docs": "Retrieve a submission report for a workspace."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

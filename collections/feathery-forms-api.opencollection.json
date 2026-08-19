@@ -1,0 +1,239 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Forms API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/form/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tags (comma-separated)"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all forms."
+        },
+        {
+          "info": {
+            "name": "Create form from template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/form/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new form from a template."
+        },
+        {
+          "info": {
+            "name": "Retrieve form schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/form/:form_id/",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique form identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the full schema for a specific form."
+        },
+        {
+          "info": {
+            "name": "Update form properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/form/:form_id/",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique form identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update properties of a specific form."
+        },
+        {
+          "info": {
+            "name": "Delete form",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.feathery.io/api/form/:form_id/",
+            "params": [
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique form identifier"
+              }
+            ]
+          },
+          "docs": "Delete a specific form."
+        },
+        {
+          "info": {
+            "name": "Duplicate form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/form/copy/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a copy of an existing form."
+        },
+        {
+          "info": {
+            "name": "List form submissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/form/submission/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "form_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter submissions by form ID"
+              },
+              {
+                "name": "completed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by completion status"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of form submissions."
+        },
+        {
+          "info": {
+            "name": "Create/update form submissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/form/submission/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update form submissions."
+        },
+        {
+          "info": {
+            "name": "Export submission as PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/form/submission/pdf/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export a form submission as a PDF document."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

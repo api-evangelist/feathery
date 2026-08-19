@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Document Intelligence API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Document Intelligence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Extract data from documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/ai/run/:extraction_id/",
+            "params": [
+              {
+                "name": "extraction_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique extraction identifier"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "user_id",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Extract data from documents using AI (multipart/form-data)."
+        },
+        {
+          "info": {
+            "name": "List all extractions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/ai/extraction/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all extraction configurations."
+        },
+        {
+          "info": {
+            "name": "Retrieve extraction configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/ai/extraction/:extraction_id/",
+            "params": [
+              {
+                "name": "extraction_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique extraction identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve the configuration for a specific extraction."
+        },
+        {
+          "info": {
+            "name": "List extraction runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/ai/run/batch/:extraction_id/",
+            "params": [
+              {
+                "name": "extraction_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique extraction identifier"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this datetime"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this datetime"
+              }
+            ]
+          },
+          "docs": "List all runs for a specific extraction."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

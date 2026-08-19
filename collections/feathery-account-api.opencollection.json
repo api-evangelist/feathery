@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/account/"
+          },
+          "docs": "Retrieve team and account information."
+        },
+        {
+          "info": {
+            "name": "Edit account settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/account/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit account settings."
+        },
+        {
+          "info": {
+            "name": "Invite new user to team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/account/invite/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite new users to the team."
+        },
+        {
+          "info": {
+            "name": "Remove user from team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/account/uninvite/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove a user from the team."
+        },
+        {
+          "info": {
+            "name": "Rotate API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/account/rotate_key/"
+          },
+          "docs": "Rotate the team API key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

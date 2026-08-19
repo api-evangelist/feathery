@@ -1,0 +1,1089 @@
+{
+  "item": [
+    {
+      "id": "a8a6c73e-322c-4dbf-a76e-e4de65ce5249",
+      "name": "Document Intelligence",
+      "description": {
+        "content": "AI-driven document extraction",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e84b5d7c-fd5a-4815-b2c1-da434ef769b6",
+          "name": "Extract data from documents",
+          "request": {
+            "name": "Extract data from documents",
+            "description": {
+              "content": "Extract data from documents using AI (multipart/form-data).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "run",
+                ":extraction_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "extraction_id",
+                  "description": "(Required) Unique extraction identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "Document file to extract data from"
+                },
+                {
+                  "key": "user_id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "User or submission identifier"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "46faab6f-0bd3-4321-8135-4b5c2a8c476e",
+              "name": "Extraction completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "Document file to extract data from",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "User or submission identifier",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"user_id\": \"string\",\n  \"file_name\": \"string\",\n  \"success\": true,\n  \"approved\": false,\n  \"approver\": \"g2y@MSzRwChGlkpFlxngC.ke\",\n  \"identity\": \"string\",\n  \"data\": [\n    {\n      \"field_internal_id\": \"7df463b2-a327-4d45-9fa0-492bb4500347\",\n      \"value\": {}\n    },\n    {\n      \"field_internal_id\": \"37289b56-f72d-86c3-e8d0-661c57dfc24b\",\n      \"value\": {}\n    }\n  ],\n  \"email_extracted_at\": \"1950-11-02T19:12:52.971Z\",\n  \"document_extracted_at\": \"2007-12-28T21:54:51.322Z\",\n  \"created_at\": \"1994-01-13T01:58:21.517Z\",\n  \"updated_at\": \"1975-10-06T23:17:34.943Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adca0fdf-7e98-496f-a0b2-b096f4d52cee",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "Document file to extract data from",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "User or submission identifier",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13735dea-f145-4770-a40e-56b997e58d70",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "Document file to extract data from",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "User or submission identifier",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afad5cc9-03d3-4ab3-aada-a24d4ec28060",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "Document file to extract data from",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "User or submission identifier",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12d82cf4-db64-4e2c-b2be-ddb0f4b3f0b9",
+          "name": "List all extractions",
+          "request": {
+            "name": "List all extractions",
+            "description": {
+              "content": "Retrieve a list of all extraction configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "extraction",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Number of results per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f61a3b95-1042-4425-9bef-bb426f975f42",
+              "name": "List of extractions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "extraction",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8266,\n  \"next\": \"https://QdBtkSdkTBVJPQdQDCwjKQaaai.djVPKNG9PTOh2J7qXTI07egNjIUsgzwS3AWXcYc49iPM,H.QFtUsCqtZ1fHpyYTP0O3\",\n  \"previous\": \"http://RJjZbEktdloStEcmrpatFoSvfToBKujWX.gydRR,B37HkthSdj,3cp7.slIsGz.Xqm3imBEaB29N2MPR2DGQ7aKgYbX5,gHfMeULp0iI+HvwLuG1HXzG9MHvZWy\",\n  \"total_pages\": 7169,\n  \"current_page\": 3981,\n  \"results\": [\n    {\n      \"id\": \"623fc5c8-6144-20ee-0471-fbf0088ff6fc\",\n      \"name\": \"string\",\n      \"file_type\": \"ai_query\",\n      \"extraction_type\": \"string\",\n      \"merge_files\": true,\n      \"confidence_scores_enabled\": false,\n      \"context_rules\": [\n        \"string\",\n        \"string\"\n      ],\n      \"queries\": [\n        {\n          \"id\": \"4e7b8771-3364-99d6-2a18-f1372cb469e3\",\n          \"question_type\": \"yes_no\",\n          \"entities\": [\n            \"string\",\n            \"string\"\n          ],\n          \"criteria\": \"string\",\n          \"data_validation_rules\": [\n            \"string\",\n            \"string\"\n          ],\n          \"run_email_mode\": \"email_document\"\n        },\n        {\n          \"id\": \"a4998fb9-8ca4-5eec-39d9-6d840bd49cde\",\n          \"question_type\": \"yes_no\",\n          \"entities\": [\n            \"string\",\n            \"string\"\n          ],\n          \"criteria\": \"string\",\n          \"data_validation_rules\": [\n            \"string\",\n            \"string\"\n          ],\n          \"run_email_mode\": \"email_document\"\n        }\n      ]\n    },\n    {\n      \"id\": \"7231c33c-9b8d-f82b-2d1a-4c5ed25315a8\",\n      \"name\": \"string\",\n      \"file_type\": \"ai_query\",\n      \"extraction_type\": \"string\",\n      \"merge_files\": false,\n      \"confidence_scores_enabled\": true,\n      \"context_rules\": [\n        \"string\",\n        \"string\"\n      ],\n      \"queries\": [\n        {\n          \"id\": \"2b4c1e3d-b5c6-cdc1-7dd1-9e9d898faa82\",\n          \"question_type\": \"page_number\",\n          \"entities\": [\n            \"string\",\n            \"string\"\n          ],\n          \"criteria\": \"string\",\n          \"data_validation_rules\": [\n            \"string\",\n            \"string\"\n          ],\n          \"run_email_mode\": \"email_only\"\n        },\n        {\n          \"id\": \"9fd1249e-eccf-6fdb-96d1-bd8d05951e71\",\n          \"question_type\": \"one_value\",\n          \"entities\": [\n            \"string\",\n            \"string\"\n          ],\n          \"criteria\": \"string\",\n          \"data_validation_rules\": [\n            \"string\",\n            \"string\"\n          ],\n          \"run_email_mode\": \"email_only\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "790b9a01-e667-4e32-abc3-e928cc787bad",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "extraction",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e97cc9b-a596-4987-a32d-0ad5d2d127f6",
+          "name": "Retrieve extraction configuration",
+          "request": {
+            "name": "Retrieve extraction configuration",
+            "description": {
+              "content": "Retrieve the configuration for a specific extraction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "extraction",
+                ":extraction_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "extraction_id",
+                  "description": "(Required) Unique extraction identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b5ef476-d2a2-4d02-aa43-010a836d38f7",
+              "name": "Extraction configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "extraction",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"c2a8b3fa-ceb2-f6fe-fe2b-c9e3d099f405\",\n  \"name\": \"string\",\n  \"file_type\": \"csv\",\n  \"extraction_type\": \"string\",\n  \"merge_files\": true,\n  \"confidence_scores_enabled\": false,\n  \"context_rules\": [\n    \"string\",\n    \"string\"\n  ],\n  \"queries\": [\n    {\n      \"id\": \"449c5674-94cf-f91c-e12a-5448cad9ad54\",\n      \"question_type\": \"one_value\",\n      \"entities\": [\n        \"string\",\n        \"string\"\n      ],\n      \"criteria\": \"string\",\n      \"data_validation_rules\": [\n        \"string\",\n        \"string\"\n      ],\n      \"run_email_mode\": \"email_only\"\n    },\n    {\n      \"id\": \"91df3b22-b457-98fc-c6b8-192af591e7ea\",\n      \"question_type\": \"yes_no\",\n      \"entities\": [\n        \"string\",\n        \"string\"\n      ],\n      \"criteria\": \"string\",\n      \"data_validation_rules\": [\n        \"string\",\n        \"string\"\n      ],\n      \"run_email_mode\": \"email_document\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3cceca1-e86e-4fa7-96cd-3c2795b3b898",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "extraction",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa92c551-354c-4589-85c2-c30c6a3848bd",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "extraction",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf6cc698-4cd3-46d3-8371-6c2afd9161ac",
+          "name": "List extraction runs",
+          "request": {
+            "name": "List extraction runs",
+            "description": {
+              "content": "List all runs for a specific extraction.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "ai",
+                "run",
+                "batch",
+                ":extraction_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "100",
+                  "description": "Number of results per page (max 1000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results from this datetime"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "Filter results up to this datetime"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "extraction_id",
+                  "description": "(Required) Unique extraction identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6766153d-7213-435a-b85d-f366f8482119",
+              "name": "List of extraction runs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    "batch",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 213,\n  \"next\": \"http://oYIDjpL.ztEU5\",\n  \"previous\": \"http://RMevNv.akauUShG.AtqwmZv1DBgvGAVVj0J6j1HcGH3SZWO0O2sXdVXURX1uM,kL5Hh\",\n  \"total_pages\": 3368,\n  \"current_page\": 3836,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"file_name\": \"string\",\n      \"success\": true,\n      \"approved\": false,\n      \"approver\": \"4C0pE@DyuJWJgyKVdxmyIfxiZgeLhqNoOUjy.actu\",\n      \"identity\": \"string\",\n      \"data\": [\n        {\n          \"field_internal_id\": \"3ed46021-9add-6cf2-760f-5b2719576467\",\n          \"value\": {}\n        },\n        {\n          \"field_internal_id\": \"b0d5fe76-8e7f-2e1c-93b3-a4837116ae02\",\n          \"value\": {}\n        }\n      ],\n      \"email_extracted_at\": \"2012-04-19T06:27:18.531Z\",\n      \"document_extracted_at\": \"1976-07-26T01:37:33.131Z\",\n      \"created_at\": \"1986-08-18T17:54:52.259Z\",\n      \"updated_at\": \"1952-07-07T04:08:39.604Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"user_id\": \"string\",\n      \"file_name\": \"string\",\n      \"success\": true,\n      \"approved\": true,\n      \"approver\": \"KZy@DznwgZtTsFBKwPudJaC.xlj\",\n      \"identity\": \"string\",\n      \"data\": [\n        {\n          \"field_internal_id\": \"9e66d3d7-5181-51b8-572b-e1a5ceeae642\",\n          \"value\": {}\n        },\n        {\n          \"field_internal_id\": \"2796fe26-b65b-0ab0-34ed-fe9b10c89d07\",\n          \"value\": {}\n        }\n      ],\n      \"email_extracted_at\": \"2010-06-26T16:52:03.719Z\",\n      \"document_extracted_at\": \"2006-02-17T14:00:32.916Z\",\n      \"created_at\": \"1971-04-16T07:39:24.351Z\",\n      \"updated_at\": \"1978-10-30T19:43:52.300Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85413caa-bdb2-4f35-a33c-85bf26c60591",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    "batch",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdd6bfc6-132a-413b-9770-d1266af74de1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "ai",
+                    "run",
+                    "batch",
+                    ":extraction_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "extraction_id",
+                      "description": "(Required) Unique extraction identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.feathery.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b0a6c0f4-a3f0-4cbf-9914-66113639df78",
+    "name": "Feathery REST Account Document Intelligence API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Feathery REST Account Hidden Fields API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Hidden Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List hidden fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.feathery.io/api/field/hidden/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 1000)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all hidden fields."
+        },
+        {
+          "info": {
+            "name": "Create hidden fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.feathery.io/api/field/hidden/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new hidden fields."
+        },
+        {
+          "info": {
+            "name": "Edit hidden fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.feathery.io/api/field/hidden/detail/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit existing hidden fields."
+        },
+        {
+          "info": {
+            "name": "Delete hidden fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.feathery.io/api/field/hidden/delete/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete hidden fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

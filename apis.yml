@@ -165,6 +165,8 @@ apis:
   humanURL: https://api-docs.feathery.io/
   baseURL: https://api.feathery.io
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI

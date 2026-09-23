@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Feathery REST Account Workspaces API
-  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
-
-    '
+  title: Feathery REST Workspaces API
+  description: RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
   version: 1.0.0
   contact:
     url: https://www.feathery.io
@@ -253,6 +251,44 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique workspace identifier
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
   responses:
     BadRequest:
       description: Bad Request
@@ -272,76 +308,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    EndTime:
-      name: end_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results up to this datetime
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique workspace identifier
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
   schemas:
-    PaginatedWorkspaces:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/Workspace'
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the next page
-        previous:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
     Workspace:
       type: object
       properties:
@@ -360,6 +327,30 @@ components:
           type: string
           format: date-time
           description: Last update timestamp
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
     Error:
       type: object
       properties:
@@ -373,6 +364,15 @@ components:
             items:
               type: string
           description: Field-level validation errors
+    PaginatedWorkspaces:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Workspace'
   securitySchemes:
     TokenAuth:
       type: apiKey

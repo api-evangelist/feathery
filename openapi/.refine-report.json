@@ -1,15 +1,7 @@
 {
   "provider": "feathery",
   "sources": [
-    "feathery-account-api-openapi.yml",
-    "feathery-data-hubs-api-openapi.yml",
-    "feathery-document-intelligence-api-openapi.yml",
-    "feathery-document-templates-api-openapi.yml",
-    "feathery-end-users-api-openapi.yml",
-    "feathery-forms-api-openapi.yml",
-    "feathery-hidden-fields-api-openapi.yml",
-    "feathery-logs-api-openapi.yml",
-    "feathery-workspaces-api-openapi.yml"
+    "_original/feathery-rest-api-openapi.yml"
   ],
   "outputs": [
     "feathery-account-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "feathery-rest-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "feathery-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-data-hubs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-document-intelligence-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-document-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-end-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-hidden-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "feathery-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

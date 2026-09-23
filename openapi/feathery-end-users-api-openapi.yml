@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Feathery REST Account End Users API
-  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
-
-    '
+  title: Feathery REST End Users API
+  description: RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
   version: 1.0.0
   contact:
     url: https://www.feathery.io
@@ -139,7 +137,103 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    CreatedAfter:
+      name: created_after
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (after)
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    CreatedBefore:
+      name: created_before
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (before)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique user identifier
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    PaginatedUsers:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
     User:
       type: object
       properties:
@@ -158,37 +252,6 @@ components:
           type: string
           format: date-time
           description: Last update timestamp
-    PaginatedUsers:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the next page
-        previous:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
     Error:
       type: object
       properties:
@@ -227,69 +290,6 @@ components:
         updated_at:
           type: string
           format: date-time
-  parameters:
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique user identifier
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-    CreatedBefore:
-      name: created_before
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (before)
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    CreatedAfter:
-      name: created_after
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (after)
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

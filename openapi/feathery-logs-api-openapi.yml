@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Feathery REST Account Logs API
-  description: 'RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
-
-    '
+  title: Feathery REST Logs API
+  description: RESTful API for managing forms, fields, submissions, documents, end users, and workflows. Feathery is an enterprise form SDK and AI-driven data intake platform purpose-built for financial services including insurance and wealth management. Supports multi-region deployments across US, Canada, Europe, and Australia with token-based authentication.
   version: 1.0.0
   contact:
     url: https://www.feathery.io
@@ -122,14 +120,13 @@ components:
       schema:
         type: string
       description: Unique form identifier
-    ExtractionId:
-      name: extraction_id
-      in: path
-      required: true
+    StartTime:
+      name: start_time
+      in: query
       schema:
         type: string
-        format: uuid
-      description: Unique extraction identifier
+        format: date-time
+      description: Filter results from this datetime
     EndTime:
       name: end_time
       in: query
@@ -145,13 +142,6 @@ components:
         maximum: 1000
         default: 100
       description: Number of results per page (max 1000)
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
     Page:
       name: page
       in: query
@@ -159,21 +149,40 @@ components:
         type: integer
         default: 1
       description: Page number
-  responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
   schemas:
-    PaginatedEmailLogs:
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    PaginatedEmailIssues:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
       - type: object
@@ -193,28 +202,6 @@ components:
             items:
               type: object
               additionalProperties: true
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the next page
-        previous:
-          type: string
-          format: uri
-          nullable: true
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
     Error:
       type: object
       properties:
@@ -228,7 +215,7 @@ components:
             items:
               type: string
           description: Field-level validation errors
-    PaginatedEmailIssues:
+    PaginatedEmailLogs:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
       - type: object
@@ -238,6 +225,19 @@ components:
             items:
               type: object
               additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

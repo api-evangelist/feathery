@@ -38,7 +38,7 @@ tags:
   - Multi-Step Forms
   - Document Intelligence
   - Artificial Intelligence
-  - Financial-Services
+  - Financial Services
   - Insurance
   - Wealth Management
   - E-Signature
@@ -62,6 +62,7 @@ tags_raw:
   - Submissions
   - Payments
   - Authentication
+  - Financial-Services
 apis:
 - aid: feathery:feathery-account-api
   name: Feathery Account API

@@ -125,20 +125,48 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    HiddenField:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Hidden field unique identifier
+        internal_id:
+          type: string
+          format: uuid
+          description: Internal identifier
+        type:
+          type: string
+          enum:
+          - json_value
+          - number_value
+          - text_value
+          description: Hidden field data type
+        server_side:
+          type: boolean
+          description: Whether the field is server-side only
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
     PaginatedResponse:
       type: object
       properties:
@@ -182,6 +210,15 @@ components:
         server_side:
           type: boolean
           description: Whether the field should be server-side only
+    PaginatedHiddenFields:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/HiddenField'
     HiddenFieldUpdate:
       type: object
       required:
@@ -200,56 +237,6 @@ components:
         server_side:
           type: boolean
           description: Whether the field should be server-side only
-    HiddenField:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Hidden field unique identifier
-        internal_id:
-          type: string
-          format: uuid
-          description: Internal identifier
-        type:
-          type: string
-          enum:
-          - json_value
-          - number_value
-          - text_value
-          description: Hidden field data type
-        server_side:
-          type: boolean
-          description: Whether the field is server-side only
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-    PaginatedHiddenFields:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/HiddenField'
   parameters:
     PageSize:
       name: page_size
@@ -266,6 +253,19 @@ components:
         type: integer
         default: 1
       description: Page number
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

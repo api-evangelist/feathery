@@ -252,21 +252,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique workspace identifier
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
     EndTime:
       name: end_time
       in: query
@@ -282,6 +267,14 @@ components:
         maximum: 1000
         default: 100
       description: Number of results per page (max 1000)
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique workspace identifier
     Page:
       name: page
       in: query
@@ -289,26 +282,36 @@ components:
         type: integer
         default: 1
       description: Page number
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
   schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    PaginatedWorkspaces:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Workspace'
     Workspace:
       type: object
       properties:
@@ -351,28 +354,25 @@ components:
         current_page:
           type: integer
           description: Current page number
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-    PaginatedWorkspaces:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/Workspace'
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

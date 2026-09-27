@@ -136,26 +136,20 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    AccountUpdate:
+    Error:
       type: object
       properties:
-        name:
+        detail:
           type: string
-          description: New account name
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
     Account:
       type: object
       properties:
@@ -184,19 +178,25 @@ components:
               role:
                 type: string
           description: Team members
-    Error:
+    AccountUpdate:
       type: object
       properties:
-        detail:
+        name:
           type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
+          description: New account name
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

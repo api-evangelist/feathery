@@ -137,6 +137,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    AccountUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: New account name
     Error:
       type: object
       properties:
@@ -178,12 +184,6 @@ components:
               role:
                 type: string
           description: Team members
-    AccountUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: New account name
   responses:
     Unauthorized:
       description: Unauthorized - invalid or missing API key

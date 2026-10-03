@@ -137,7 +137,84 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique user identifier
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    CreatedAfter:
+      name: created_after
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (after)
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    CreatedBefore:
+      name: created_before
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (before)
   schemas:
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    PaginatedUsers:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
     Error:
       type: object
       properties:
@@ -169,30 +246,6 @@ components:
           type: string
           format: date-time
           description: Last update timestamp
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the next page
-        previous:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
     UserFormSession:
       type: object
       properties:
@@ -218,68 +271,15 @@ components:
         updated_at:
           type: string
           format: date-time
-    PaginatedUsers:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-  parameters:
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique user identifier
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-    CreatedBefore:
-      name: created_before
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (before)
-    CreatedAfter:
-      name: created_after
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (after)
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
       content:
         application/json:
           schema:

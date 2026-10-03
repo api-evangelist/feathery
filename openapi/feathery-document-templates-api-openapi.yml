@@ -164,6 +164,74 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    PaginatedDocumentEnvelopes:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/DocumentEnvelope'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
+    DocumentTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Template identifier
+        name:
+          type: string
+          description: Template name
+        type:
+          type: string
+          enum:
+          - pdf
+          - docx
+          - xlsx
+          - pptx
+          - idml
+          description: Document type
+        file:
+          type: string
+          format: uri
+          description: URL to the template file
+        tags:
+          type: array
+          items:
+            type: string
+          description: Template tags
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
     Error:
       type: object
       properties:
@@ -228,75 +296,14 @@ components:
           type: string
           format: date-time
           description: Creation timestamp
-    DocumentTemplate:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Template identifier
-        name:
-          type: string
-          description: Template name
-        type:
-          type: string
-          enum:
-          - pdf
-          - docx
-          - xlsx
-          - pptx
-          - idml
-          description: Document type
-        file:
-          type: string
-          format: uri
-          description: URL to the template file
-        tags:
-          type: array
-          items:
-            type: string
-          description: Template tags
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the next page
-        previous:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
-    PaginatedDocumentEnvelopes:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/DocumentEnvelope'
   parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
     PageSize:
       name: page_size
       in: query
@@ -305,13 +312,6 @@ components:
         maximum: 1000
         default: 100
       description: Number of results per page (max 1000)
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
     CreatedAfter:
       name: created_after
       in: query
@@ -327,14 +327,14 @@ components:
         format: date-time
       description: Filter by creation date (before)
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
       content:
         application/json:
           schema:

@@ -122,58 +122,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    EndTime:
-      name: end_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results up to this datetime
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    ExtractionId:
-      name: extraction_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique extraction identifier
   schemas:
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
     PaginatedExtractionRuns:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
@@ -183,6 +132,30 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ExtractionRun'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
     ExtractionQuery:
       type: object
       properties:
@@ -223,62 +196,28 @@ components:
           - email_document
           - document_only
           description: Email processing mode
-    ExtractionRun:
+    Error:
       type: object
       properties:
-        id:
+        detail:
           type: string
-          description: Run identifier
-        user_id:
-          type: string
-          description: Submission reference
-        file_name:
-          type: string
-          description: Name of the processed file
-        success:
-          type: boolean
-          description: Whether the extraction was successful
-        approved:
-          type: boolean
-          description: Whether the result has been approved
-        approver:
-          type:
-          - string
-          - 'null'
-          format: email
-          description: Email of the approver
-        identity:
-          type: string
-          description: Trigger email identity
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              field_internal_id:
-                type: string
-                format: uuid
-              value:
-                description: Extracted value
-          description: Extracted data
-        email_extracted_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: When data was extracted from email
-        document_extracted_at:
-          type: string
-          format: date-time
-          description: When data was extracted from document
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    PaginatedExtractions:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/ExtractionConfig'
     ExtractionConfig:
       type: object
       properties:
@@ -336,48 +275,109 @@ components:
           items:
             type: object
           description: Integration configurations
-    PaginatedExtractions:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/ExtractionConfig'
-    PaginatedResponse:
+    ExtractionRun:
       type: object
       properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
+        id:
+          type: string
+          description: Run identifier
+        user_id:
+          type: string
+          description: Submission reference
+        file_name:
+          type: string
+          description: Name of the processed file
+        success:
+          type: boolean
+          description: Whether the extraction was successful
+        approved:
+          type: boolean
+          description: Whether the result has been approved
+        approver:
           type:
           - string
           - 'null'
-          format: uri
-          description: URL for the next page
-        previous:
+          format: email
+          description: Email of the approver
+        identity:
+          type: string
+          description: Trigger email identity
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              field_internal_id:
+                type: string
+                format: uuid
+              value:
+                description: Extracted value
+          description: Extracted data
+        email_extracted_at:
           type:
           - string
           - 'null'
-          format: uri
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
+          format: date-time
+          description: When data was extracted from email
+        document_extracted_at:
+          type: string
+          format: date-time
+          description: When data was extracted from document
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+  parameters:
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
       content:
         application/json:
           schema:

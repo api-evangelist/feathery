@@ -112,66 +112,8 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    EndTime:
-      name: end_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results up to this datetime
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    ExtractionId:
-      name: extraction_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique extraction identifier
   schemas:
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-    PaginatedEmailIssues:
+    PaginatedEmailLogs:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
       - type: object
@@ -181,7 +123,7 @@ components:
             items:
               type: object
               additionalProperties: true
-    PaginatedLogs:
+    PaginatedEmailIssues:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
       - type: object
@@ -215,7 +157,20 @@ components:
         current_page:
           type: integer
           description: Current page number
-    PaginatedEmailLogs:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    PaginatedLogs:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
       - type: object
@@ -225,15 +180,60 @@ components:
             items:
               type: object
               additionalProperties: true
+  parameters:
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
   responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
       content:
         application/json:
           schema:

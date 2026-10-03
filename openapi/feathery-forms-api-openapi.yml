@@ -292,178 +292,50 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    EndTime:
-      name: end_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results up to this datetime
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    FormStep:
+    Submission:
       type: object
       properties:
-        id:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmissionValue'
+          description: Submitted field values
+        user_id:
           type: string
-          description: Step identifier
-        internal_id:
+          description: User identifier
+        submission_start:
           type: string
-          format: uuid
-          description: Internal step identifier
-        origin:
-          type: boolean
-          description: Whether this is the first step
-        images:
-          type: array
-          items:
-            type: object
-          description: Images on the step
-        videos:
-          type: array
-          items:
-            type: object
-          description: Videos on the step
-        texts:
-          type: array
-          items:
-            type: object
-          description: Text elements on the step
-        buttons:
-          type: array
-          items:
-            type: object
-          description: Buttons on the step
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field'
-          description: Fields on the step
-    SubmissionValue:
+          format: date-time
+          description: When the submission was started
+        last_submitted:
+          type: string
+          format: date-time
+          description: When the submission was last updated
+    PaginatedResponse:
       type: object
       properties:
-        id:
-          type: string
-          description: Field identifier
-        type:
-          type: string
-          description: Field type
-        value:
-          description: Submitted value (type varies by field type)
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    Form:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Form identifier
-        name:
-          type: string
-          description: Form name
-        active:
-          type: boolean
-          description: Whether the form is active
-        internal_id:
-          type: string
-          format: uuid
-          description: Workspace-specific internal identifier
-        tags:
-          type: array
-          items:
-            type: string
-          description: Form tags
-        created_at:
-          type: string
-          format: date-time
-          description: Creation timestamp
-        updated_at:
-          type: string
-          format: date-time
-          description: Last update timestamp
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-    PaginatedForms:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/Form'
-    PaginatedSubmissions:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/Submission'
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
     LogicRule:
       type: object
       properties:
@@ -521,6 +393,44 @@ components:
           - code_editor
           - no-code
           description: Rule editing mode
+    FormStep:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Step identifier
+        internal_id:
+          type: string
+          format: uuid
+          description: Internal step identifier
+        origin:
+          type: boolean
+          description: Whether this is the first step
+        images:
+          type: array
+          items:
+            type: object
+          description: Images on the step
+        videos:
+          type: array
+          items:
+            type: object
+          description: Videos on the step
+        texts:
+          type: array
+          items:
+            type: object
+          description: Text elements on the step
+        buttons:
+          type: array
+          items:
+            type: object
+          description: Buttons on the step
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+          description: Fields on the step
     SubmissionInput:
       type: object
       properties:
@@ -537,6 +447,19 @@ components:
         completed:
           type: boolean
           description: Whether to mark the submission as completed
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
     Field:
       type: object
       properties:
@@ -594,30 +517,70 @@ components:
           - string
           - 'null'
           description: Trigger for field repetition
-    PaginatedResponse:
+    Form:
       type: object
       properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the next page
-        previous:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
+        id:
+          type: string
+          description: Form identifier
+        name:
+          type: string
+          description: Form name
+        active:
+          type: boolean
+          description: Whether the form is active
+        internal_id:
+          type: string
+          format: uuid
+          description: Workspace-specific internal identifier
+        tags:
+          type: array
+          items:
+            type: string
+          description: Form tags
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+    PaginatedSubmissions:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Submission'
+    SubmissionValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Field identifier
+        type:
+          type: string
+          description: Field type
+        value:
+          description: Submitted value (type varies by field type)
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    PaginatedForms:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/Form'
     FormDetail:
       allOf:
       - $ref: '#/components/schemas/Form'
@@ -639,25 +602,62 @@ components:
               type: object
               additionalProperties: true
             description: Integrations configured for the form
-    Submission:
-      type: object
-      properties:
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubmissionValue'
-          description: Submitted field values
-        user_id:
-          type: string
-          description: User identifier
-        submission_start:
-          type: string
-          format: date-time
-          description: When the submission was started
-        last_submitted:
-          type: string
-          format: date-time
-          description: When the submission was last updated
+  parameters:
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     TokenAuth:
       type: apiKey

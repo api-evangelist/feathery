@@ -32,6 +32,9 @@ modified: '2026-06-13'
 specificationVersion: '0.23'
 aid: feathery
 type: Index
+x-docs-platform: gitbook
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
   - Forms
   - Form Builder

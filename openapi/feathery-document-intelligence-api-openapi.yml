@@ -123,101 +123,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    PaginatedExtractionRuns:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/ExtractionRun'
-    PaginatedResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Total number of available records
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the next page
-        previous:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: URL for the previous page
-        total_pages:
-          type: integer
-          description: Total number of pages
-        current_page:
-          type: integer
-          description: Current page number
-    ExtractionQuery:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Query identifier
-        question_type:
-          type: string
-          enum:
-          - one_value
-          - multiple_value
-          - yes_no
-          - page_number
-          description: Type of question/extraction
-        entities:
-          type: array
-          items:
-            type: string
-          description: Entities to extract
-        criteria:
-          type: string
-          description: Extraction instructions
-        data_validation_rules:
-          type: array
-          items:
-            type: string
-          description: Rules for validating extracted data
-        save_to_fields:
-          type: array
-          items:
-            type: object
-          description: Field references to save extracted data to
-        run_email_mode:
-          type: string
-          enum:
-          - email_only
-          - email_document
-          - document_only
-          description: Email processing mode
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-          description: Error detail message
-        errors:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          description: Field-level validation errors
-    PaginatedExtractions:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/ExtractionConfig'
     ExtractionConfig:
       type: object
       properties:
@@ -275,6 +180,39 @@ components:
           items:
             type: object
           description: Integration configurations
+    PaginatedExtractionRuns:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/ExtractionRun'
+    PaginatedResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total number of available records
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the next page
+        previous:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL for the previous page
+        total_pages:
+          type: integer
+          description: Total number of pages
+        current_page:
+          type: integer
+          description: Current page number
     ExtractionRun:
       type: object
       properties:
@@ -331,29 +269,69 @@ components:
           type: string
           format: date-time
           description: Last update timestamp
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error detail message
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: Field-level validation errors
+    PaginatedExtractions:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/ExtractionConfig'
+    ExtractionQuery:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Query identifier
+        question_type:
+          type: string
+          enum:
+          - one_value
+          - multiple_value
+          - yes_no
+          - page_number
+          description: Type of question/extraction
+        entities:
+          type: array
+          items:
+            type: string
+          description: Entities to extract
+        criteria:
+          type: string
+          description: Extraction instructions
+        data_validation_rules:
+          type: array
+          items:
+            type: string
+          description: Rules for validating extracted data
+        save_to_fields:
+          type: array
+          items:
+            type: object
+          description: Field references to save extracted data to
+        run_email_mode:
+          type: string
+          enum:
+          - email_only
+          - email_document
+          - document_only
+          description: Email processing mode
   parameters:
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    ExtractionId:
-      name: extraction_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique extraction identifier
     PageSize:
       name: page_size
       in: query
@@ -362,6 +340,13 @@ components:
         maximum: 1000
         default: 100
       description: Number of results per page (max 1000)
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
     EndTime:
       name: end_time
       in: query
@@ -369,6 +354,21 @@ components:
         type: string
         format: date-time
       description: Filter results up to this datetime
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
   responses:
     NotFound:
       description: Resource not found

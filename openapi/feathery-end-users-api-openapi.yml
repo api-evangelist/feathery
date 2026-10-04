@@ -137,51 +137,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    UserId:
-      name: user_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique user identifier
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-    CreatedAfter:
-      name: created_after
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (after)
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    CreatedBefore:
-      name: created_before
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter by creation date (before)
   schemas:
+    PaginatedUsers:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
     PaginatedResponse:
       type: object
       properties:
@@ -206,15 +171,31 @@ components:
         current_page:
           type: integer
           description: Current page number
-    PaginatedUsers:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
+    UserFormSession:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: User identifier
+        form_id:
+          type: string
+          description: Form identifier
+        current_step:
+          type: string
+          description: Current step in the form
+        field_values:
+          type: object
+          additionalProperties: true
+          description: Current field values
+        completed:
+          type: boolean
+          description: Whether the form session is completed
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Error:
       type: object
       properties:
@@ -246,31 +227,6 @@ components:
           type: string
           format: date-time
           description: Last update timestamp
-    UserFormSession:
-      type: object
-      properties:
-        user_id:
-          type: string
-          description: User identifier
-        form_id:
-          type: string
-          description: Form identifier
-        current_step:
-          type: string
-          description: Current step in the form
-        field_values:
-          type: object
-          additionalProperties: true
-          description: Current field values
-        completed:
-          type: boolean
-          description: Whether the form session is completed
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
   responses:
     NotFound:
       description: Resource not found
@@ -290,6 +246,50 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique user identifier
+    CreatedBefore:
+      name: created_before
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (before)
+    CreatedAfter:
+      name: created_after
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter by creation date (after)
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
   securitySchemes:
     TokenAuth:
       type: apiKey

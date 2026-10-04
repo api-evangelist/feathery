@@ -113,16 +113,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    PaginatedEmailLogs:
-      allOf:
-      - $ref: '#/components/schemas/PaginatedResponse'
-      - type: object
-        properties:
-          results:
-            type: array
-            items:
-              type: object
-              additionalProperties: true
     PaginatedEmailIssues:
       allOf:
       - $ref: '#/components/schemas/PaginatedResponse'
@@ -157,6 +147,16 @@ components:
         current_page:
           type: integer
           description: Current page number
+    PaginatedEmailLogs:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResponse'
+      - type: object
+        properties:
+          results:
+            type: array
+            items:
+              type: object
+              additionalProperties: true
     Error:
       type: object
       properties:
@@ -180,51 +180,6 @@ components:
             items:
               type: object
               additionalProperties: true
-  parameters:
-    StartTime:
-      name: start_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results from this datetime
-    Page:
-      name: page
-      in: query
-      schema:
-        type: integer
-        default: 1
-      description: Page number
-    FormId:
-      name: form_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique form identifier
-    ExtractionId:
-      name: extraction_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: Unique extraction identifier
-    PageSize:
-      name: page_size
-      in: query
-      schema:
-        type: integer
-        maximum: 1000
-        default: 100
-      description: Number of results per page (max 1000)
-    EndTime:
-      name: end_time
-      in: query
-      schema:
-        type: string
-        format: date-time
-      description: Filter results up to this datetime
   responses:
     NotFound:
       description: Resource not found
@@ -238,6 +193,51 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PageSize:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        maximum: 1000
+        default: 100
+      description: Number of results per page (max 1000)
+    ExtractionId:
+      name: extraction_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Unique extraction identifier
+    StartTime:
+      name: start_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results from this datetime
+    FormId:
+      name: form_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique form identifier
+    EndTime:
+      name: end_time
+      in: query
+      schema:
+        type: string
+        format: date-time
+      description: Filter results up to this datetime
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+      description: Page number
   securitySchemes:
     TokenAuth:
       type: apiKey

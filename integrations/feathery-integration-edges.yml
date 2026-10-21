@@ -53,6 +53,33 @@ edges:
     builder: independent publisher (not the vendor; individual or SI)
   detected_by: sweep-rpa-document-ai.py
   first_seen: '2026-10-20'
+- partner_name: Index Ventures
+  partner: index-ventures
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.indexventures.com/companies/feathery/
+  category: vc portfolio participation
+  contract_reference:
+    register: Index Ventures companies (indexventures.com/companies/)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Feathery
+    register_id: https://www.indexventures.com/companies/feathery/
+    register_country: null
+    register_website: https://www.feathery.io/
+    matched_domain: feathery.io
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    sector: business-applications
+  detected_by: sweep-vc-portfolios.py
+  first_seen: '2026-10-21'
 - partner_name: Slack (own)
   partner: slack
   partner_match: mirror
@@ -89,11 +116,35 @@ edges:
   category: Productivity;Collaboration
   badges:
   - Power Platform certified connector
+- partner_name: HubSpot (own)
+  partner: hubspot
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/feathery-forms-1001618
+  mirror_of: hubspot/integrations/hubspot-integration-edges.yml
+  apps:
+  - Feathery Forms
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: LEAD_SCORING_ROUTING
 method: searched
 checked:
 - https://zapier.com/api/v4/apps/
 - slack/integrations/slack-integration-edges.yml
 - https://learn.microsoft.com/en-us/connectors/connector-reference/
 - microsoft-power-automate/integrations/microsoft-power-automate-integration-edges.yml
+- https://a16z.com/portfolio/
+- https://www.battery.com/company/
+- https://www.battery.com/wp-admin/admin-ajax.php
+- https://www.indexventures.com/companies/
+- https://www.sequoiacap.com/our-companies/
+- https://www.sequoiacap.com/sitemap.xml
+- hubspot/integrations/hubspot-integration-edges.yml
 source:
 - https://zapier.com/api/v4/apps/

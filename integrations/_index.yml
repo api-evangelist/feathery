@@ -56,6 +56,34 @@
     builder: independent publisher (not the vendor; individual or SI)
   status: pending-generation
   arazzo: null
+- slug: feathery-index-ventures
+  label: Index Ventures
+  partner: index-ventures
+  partner_name: Index Ventures
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.indexventures.com/companies/feathery/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Index Ventures companies (indexventures.com/companies/)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Feathery
+    register_id: https://www.indexventures.com/companies/feathery/
+    register_country: null
+    register_website: https://www.feathery.io/
+    matched_domain: feathery.io
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    sector: business-applications
+  status: not-a-workflow
+  arazzo: null
 - slug: feathery-slack-own
   label: Slack (own)
   partner: slack
@@ -78,6 +106,19 @@
   marketplace: power-platform-connectors
   channel: partner-built
   evidence: https://learn.microsoft.com/en-us/connectors/featheryforms/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: feathery-hubspot-own
+  label: HubSpot (own)
+  partner: hubspot
+  partner_name: HubSpot (own)
+  category: LEAD_SCORING_ROUTING
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/feathery-forms-1001618
   source: edge
   relationship: platform-app
   status: not-a-workflow

@@ -25,6 +25,34 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Microsoft Power Platform connectors
+  partner: microsoft-power-automate
+  partner_match: aggregator
+  type: marketplace
+  marketplace: power-platform-connectors
+  channel: connector-register
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://learn.microsoft.com/en-us/connectors/featheryip/
+  category: null
+  contract_reference:
+    register: Microsoft Power Platform connectors (Power Automate / Power Apps / Logic Apps)
+    spec_file: null
+    role: power-platform-connector:independent
+    registered_name: Feathery
+    matched_domain: feathery.io
+    matched_by: domain
+    detected_by: sweep-rpa-document-ai.py
+    detected: '2026-10-20'
+    signal_note: one edge per (provider, platform); listing alone = participation. Listing, download and connector
+      counts are context, never counted
+    connectors:
+    - Feathery
+    publishers:
+    - Troy Taylor
+    builder: independent publisher (not the vendor; individual or SI)
+  detected_by: sweep-rpa-document-ai.py
+  first_seen: '2026-10-20'
 - partner_name: Slack (own)
   partner: slack
   partner_match: mirror
@@ -42,9 +70,30 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Slack app
+- partner_name: Microsoft Power Automate (power-platform-connectors)
+  partner: microsoft-power-automate
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: power-platform-connectors
+  evidence: https://learn.microsoft.com/en-us/connectors/featheryforms/
+  mirror_of: microsoft-power-automate/integrations/microsoft-power-automate-integration-edges.yml
+  apps:
+  - Feathery Forms
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Productivity;Collaboration
+  badges:
+  - Power Platform certified connector
 method: searched
 checked:
 - https://zapier.com/api/v4/apps/
 - slack/integrations/slack-integration-edges.yml
+- https://learn.microsoft.com/en-us/connectors/connector-reference/
+- microsoft-power-automate/integrations/microsoft-power-automate-integration-edges.yml
 source:
 - https://zapier.com/api/v4/apps/
